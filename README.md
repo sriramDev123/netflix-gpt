@@ -24,6 +24,9 @@
 
   - MovieLists \* N (Vertical Scrolling)
 
-- Netflix-GPT
-  - Search Bar
-  - Movie Suggestions
+# Netflix GPT
+
+A Netflix-like app built using React, TailwindCSS, and GPT integration.
+
+- Search Bar
+- Movie Suggestions
