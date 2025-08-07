@@ -2,6 +2,11 @@
 
 - Create React-Vite
 - configured Tailwindcss
+- Header
+- Login Form
+  - Sign In Form
+  - Sign Up Form
+  - Form Validations
 
 # Features of Netflix
 
