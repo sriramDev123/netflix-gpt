@@ -3,10 +3,20 @@
 - Create React-Vite
 - configured Tailwindcss
 - Header
+- Routing of App
 - Login Form
   - Sign In Form
   - Sign Up Form
   - Form Validations
+  - useRef Hook
+  - Firebase Setup
+  - Deploying our app to Production
+  - Create Sign Up User Account
+  - Implement Sign In User API
+  - Created ReduxStore with userSlice
+  - Implemented Sign Out Feature
+  - Updated Profile
+  -
 
 # Features of Netflix
 

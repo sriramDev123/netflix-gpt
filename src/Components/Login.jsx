@@ -1,10 +1,103 @@
 import React from "react";
 import Header from "./Header";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+import { checkValidaData } from "../utils/Validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInform, setisSignInform] = useState(true);
+  const [errormsg, seterrormsg] = useState();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const name = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonCick = () => {
+    //validate the form data
+    const currentName = !isSignInform && name.current ? name.current.value : "";
+
+    const message = checkValidaData(
+      email.current.value,
+      password.current.value,
+      currentName,
+      isSignInform
+    );
+    seterrormsg(message);
+    if (message) return;
+
+    if (!isSignInform) {
+      //signUp Logic
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+          updateProfile(auth.currentUser, {
+            displayName: currentName,
+            photoURL:
+              "https://avatars.githubusercontent.com/u/212192752?s=400&u=b72e4a6ee9e4f39093868cc2a69f2500d63a40e7&v=4",
+          })
+            .then(() => {
+              // Profile updated!
+              //console.log(user);
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              // An error occurred
+              console.log(seterrormsg(error.message));
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          seterrormsg(errorCode + "-" + errorMessage);
+          // ..
+        });
+    } else {
+      //signIn Logic
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode && errorMessage) {
+            seterrormsg("Invalid UserName or Password");
+          }
+        });
+    }
+  };
 
   const toggleSignInfrom = () => {
     setisSignInform(!isSignInform);
@@ -20,13 +113,19 @@ const Login = () => {
         />
       </div>
 
-      <form className="inset-0 bg-gradient-to-t from-black/80 via-black/80 to-black/80 p-20 text-center w-130 h-170 absolute my-28 mx-auto right-0 left-0 text-white rounded-xl">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="inset-0 bg-gradient-to-t from-black/80 via-black/80 to-black/80 p-20 text-center w-130 h-170 absolute my-28 mx-auto right-0 left-0 text-white rounded-xl"
+      >
         <h1 className=" text-4xl font-bold text-left relative left-2 pb-5 ">
           {isSignInform ? "Sign In" : "Sign Up"}
         </h1>
 
         {!isSignInform && (
           <input
+            ref={name}
             className="m-3 p-3 w-85 border-1 rounded-sm"
             type="text"
             placeholder="Full Name"
@@ -34,16 +133,25 @@ const Login = () => {
         )}
 
         <input
+          ref={email}
           className="m-3 p-3 w-85 border-1 rounded-sm"
           type="text"
           placeholder="Email or mobile number"
         />
+
         <input
+          ref={password}
           className="m-3 p-3 w-85 border-1 rounded-sm"
           type="password"
           placeholder="Password"
         />
-        <button className="bg-red-600 hover:bg-red-800 transition duration-300 ease-in-out  font-bold w-85 m-2 pt-2 pb-2 rounded-sm cursor-pointer">
+
+        <p className="text-red-500 text-sm  m-6-">{errormsg}</p>
+
+        <button
+          className="bg-red-600 hover:bg-red-800 transition duration-300 ease-in-out  font-bold w-85 m-2 pt-2 pb-2 rounded-sm cursor-pointer"
+          onClick={handleButtonCick}
+        >
           {isSignInform ? "Sign In" : "Sign Up"}
         </button>
         {isSignInform && <h1 className=" font-bold pb-2 ">OR</h1>}
