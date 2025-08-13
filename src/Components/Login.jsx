@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import { checkValidaData } from "../utils/Validate";
 import {
@@ -11,11 +11,12 @@ import {
 import { auth } from "../firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { LOGO } from "../utils/constants";
 
 const Login = () => {
   const [isSignInform, setisSignInform] = useState(true);
   const [errormsg, seterrormsg] = useState();
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const name = useRef(null);
@@ -48,22 +49,18 @@ const Login = () => {
           console.log(user);
           updateProfile(auth.currentUser, {
             displayName: currentName,
-            photoURL:
-              "https://avatars.githubusercontent.com/u/212192752?s=400&u=b72e4a6ee9e4f39093868cc2a69f2500d63a40e7&v=4",
           })
             .then(() => {
               // Profile updated!
               //console.log(user);
-              const { uid, email, displayName, photoURL } = auth.currentUser;
+              const { uid, email, displayName } = auth.currentUser;
               dispatch(
                 addUser({
                   uid: uid,
                   email: email,
                   displayName: displayName,
-                  photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -87,7 +84,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -104,20 +100,17 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen bg-black">
       <Header />
-      <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/IN-en-20250721-TRIFECTA-perspective_cadc8408-df6e-4313-a05d-daa9dcac139f_large.jpg"
-          alt="logo"
-        />
+      <div className="relative inset-0 bg-black/80  flex justify-center items-center">
+        <img className="absolute inset-0 z-0" src={LOGO} alt="logo" />
       </div>
 
       <form
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="inset-0 bg-gradient-to-t from-black/80 via-black/80 to-black/80 p-20 text-center w-130 h-170 absolute my-28 mx-auto right-0 left-0 text-white rounded-xl"
+        className="inset-0 bg-gradient-to-t from-black/80 via-black/80 to-black/80 p-20 text-center w-130 h-170 relative z-10 my-28 mx-auto right-0 left-0 text-white rounded-xl"
       >
         <h1 className=" text-4xl font-bold text-left relative left-2 pb-5 ">
           {isSignInform ? "Sign In" : "Sign Up"}

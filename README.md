@@ -16,7 +16,23 @@
   - Created ReduxStore with userSlice
   - Implemented Sign Out Feature
   - Updated Profile
-  -
+  - Fetch Movies from TMDB
+  - BugFix: Sign Up user displayName and profilePic Update
+  - BugFix: if user is not logged in Redirect/browse to login page Viceversa.
+  - BugFix: if user is logged in Redirect/login to browse page Viceversa.
+  - We unsubcribe to the onAuthStateChanged callback
+  - Added the hardcoded values to constant file.
+  - Register TMDB API & create an app & get access token
+  - Get Data from TMDB now playing movies list API.
+  - I have put now playing movies list Data into my movieSlice.
+  - Custom Hook for nowPlaying movies
+  - Create movieSlice
+  - Update Store with movie Data
+  - Planning for MainConatiner & Sencodary Container
+  - Fetch Data for Trailer Video Data
+  - Update Store with Trailer Video Data
+  - Embedded the Youtube video and make it autoplay and mute
+  - added Tailwind Classes to make MainContainer look awesome.
 
 # Features of Netflix
 
