@@ -18,7 +18,7 @@ const Header = () => {
     signOut(auth)
       .then(() => {})
       .catch((error) => {
-        // An error happened.
+        // An error happened .
         console.log(error);
       });
   };
@@ -48,17 +48,17 @@ const Header = () => {
   }, []);
 
   return (
-    <header className=" inset-0 bg-black opacity-100  flex justify-between items-center px-6 py-3">
+    <div className=" absolute w-screen bg-gradient-to-b from-black px-8 py-2 z-10 flex justify-between ">
       <img
-        className="w-28 cursor-pointer"
+        className="w-44 cursor-pointer"
         src={NETFLIXLOGO}
         alt="Netflix Logo"
       />
 
-      <div className="relative">
+      <div className="flex p-2">
         {user && (
           <img
-            className="w-10 h-10 rounded cursor-pointer flex"
+            className="w-12 h-12 rounded cursor-pointer"
             src={USERICON}
             alt="user-icon"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -66,21 +66,21 @@ const Header = () => {
         )}
 
         {isMenuOpen && user && (
-          <div className="absolute right-0 mt-2 z-20 w-32 h-33 bg-gradient-to-t from-black/90 via-black/90 to-black/90  text-white rounded-xl shadow-lg border border-gray-700">
-            <p>Manage Profile</p>
-            <p>Transfer Profile</p>
-            <p>Account</p>
-            <p>Help Center</p>
+          <div className="absolute right-0 mr-5 mt-12 z-20 w-32 h-33 bg-gradient-to-t from-black/90 via-black/90 to-black/90  text-white rounded-xl shadow-lg border border-gray-700 ">
+            <p className="hover:underline cursor-pointer">Manage Profile</p>
+            <p className="hover:underline cursor-pointer">Transfer Profile</p>
+            <p className="hover:underline cursor-pointer">Account</p>
+            <p className="hover:underline cursor-pointer">Help Center</p>
             <button
               onClick={onSignOut}
-              className="block w-full text-left   hover:bg-gray-800"
+              className="block w-full text-left hover:underline cursor-pointer"
             >
               Sign Out
             </button>
           </div>
         )}
       </div>
-    </header>
+    </div>
   );
 };
 
