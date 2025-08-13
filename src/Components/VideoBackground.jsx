@@ -9,7 +9,7 @@ const VideoBackground = ({ movieId }) => {
   return (
     <div className="w-screen">
       <iframe
-        className="w-screen  aspect-video"
+        className="w-screen  aspect-video bg-gradient-to-r from-black"
         style={{ objectFit: "cover" }}
         src={
           "https://www.youtube.com/embed/" +

@@ -33,6 +33,13 @@
   - Update Store with Trailer Video Data
   - Embedded the Youtube video and make it autoplay and mute
   - added Tailwind Classes to make MainContainer look awesome.
+  - I have build the secondary Container
+  - I have build the MovieList
+  - I have build the MovieCard
+  - TMDB Image CDN URL
+  - Made the browse Page amazing with Tailwind CSS
+  - useTopRatedMovies and useUpComingMovies Custom Hook.
+  - Added Animations to my VideoTitle Component.
 
 # Features of Netflix
 
