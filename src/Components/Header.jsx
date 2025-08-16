@@ -5,13 +5,16 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { auth } from "../firebase";
-import { USERICON, NETFLIXLOGO } from "../utils/constants";
+import { USERICON, NETFLIXLOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const gptSearchView = useSelector((store) => store.gpt.gptSearchView);
 
   const onSignOut = () => {
     const auth = getAuth();
@@ -47,6 +50,15 @@ const Header = () => {
     return () => unsubcribe();
   }, []);
 
+  const handleClick = () => {
+    //toggle the GPT search component
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLangChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
     <div className=" absolute w-screen bg-gradient-to-b from-black px-8 py-2 z-10 flex justify-between ">
       <img
@@ -57,12 +69,33 @@ const Header = () => {
 
       <div className="flex p-2">
         {user && (
-          <img
-            className="w-12 h-12 rounded cursor-pointer"
-            src={USERICON}
-            alt="user-icon"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          />
+          <div className="flex items-center relative">
+            {gptSearchView && (
+              <select
+                className="p-2 m-2 bg-black text-white border-none rounded-lg cursor-pointer"
+                onChange={handleLangChange}
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option key={lang.identifier} value={lang.identifier}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            )}
+
+            <button
+              className="py-2 px-4 m-2 bg-purple-700 text-white rounded-lg hover:bg-purple-600 transition duration-300 cursor-pointer font-bold"
+              onClick={handleClick}
+            >
+              {gptSearchView ? "Homepage" : "GPT Search"}
+            </button>
+            <img
+              className="w-12 h-12 rounded cursor-pointer"
+              src={USERICON}
+              alt="user-icon"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            />
+          </div>
         )}
 
         {isMenuOpen && user && (
