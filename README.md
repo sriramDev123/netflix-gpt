@@ -9,11 +9,11 @@
   - Sign Up Form
   - Form Validations
   - useRef Hook
-  - Firebase Setup
+- Firebase Setup
   - Deploying our app to Production
   - Create Sign Up User Account
   - Implement Sign In User API
-  - Created ReduxStore with userSlice
+- Created ReduxStore with userSlice
   - Implemented Sign Out Feature
   - Updated Profile
   - Fetch Movies from TMDB
@@ -28,7 +28,7 @@
   - Custom Hook for nowPlaying movies
   - Create movieSlice
   - Update Store with movie Data
-  - Planning for MainConatiner & Sencodary Container
+- Planning for MainConatiner & Sencodary Container
   - Fetch Data for Trailer Video Data
   - Update Store with Trailer Video Data
   - Embedded the Youtube video and make it autoplay and mute
@@ -40,6 +40,10 @@
   - Made the browse Page amazing with Tailwind CSS
   - useTopRatedMovies and useUpComingMovies Custom Hook.
   - Added Animations to my VideoTitle Component.
+- GPT Search Feature Page
+- GPT SearchBar
+  - Multi-language feature in our app
+- Integrate GPT API'S (get openAi Key)
 
 # Features of Netflix
 
